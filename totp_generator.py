@@ -140,7 +140,7 @@ def service_menu(totp_creds):
         print('It appears you have not loaded any TOTP data. Please add a TOTP service. Run with --help for more.\n')
         sys.exit(1)
 
-    for key in totp_creds:
+    for key, val in sorted(totp_creds.items()):
         i += 1
         options.append(key)
         print('{i}: {name}'.format(i=i, name=key))
