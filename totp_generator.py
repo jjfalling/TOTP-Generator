@@ -30,6 +30,12 @@ from getpass import getuser
 PROGNAME = 'Keyring TOTP Generator'
 VERSION = '1.0.0'
 
+# backwards compatibility for py2
+try:
+    input = raw_input
+except NameError:
+    pass
+
 
 def signal_handler(signal, frame):
     """Catch interrupts and exit without a stack trace."""
@@ -84,7 +90,7 @@ def add_key():
         totp_creds[name]['code'] = code
 
     update_creds(totp_creds)
-    print()
+    print('')
     sys.exit(0)
 
 
@@ -95,7 +101,7 @@ def rm_key():
 
     totp_creds.pop(service, None)
     update_creds(totp_creds)
-    print()
+    print('')
     sys.exit(0)
 
 
@@ -127,7 +133,7 @@ def edit_key():
         totp_creds[name] = existing_data
 
     update_creds(totp_creds)
-    print()
+    print('')
     sys.exit(0)
 
 
