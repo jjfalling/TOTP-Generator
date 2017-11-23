@@ -1,0 +1,13 @@
+.project
+.settings/*
+.DS_Store
+.idea/*
+*.iml
+.#*
+*.pyc
+__pycache__
+#virtualenv
+env
+venv
+
+
