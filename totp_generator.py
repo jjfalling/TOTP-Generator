@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Generate TOTP code. Entries are stored in the keyring."""
 # ****************************************************************************
 # *   Keyring TOTP Generator                                                 *
