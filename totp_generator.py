@@ -156,7 +156,7 @@ def service_menu(totp_creds):
 
         print("Your selection is not valid. Try again.")
 
-    return options[i]
+    return options[int(sel)]
 
 
 def main():
