@@ -1,2 +1,3 @@
-keyring
-onetimepass
+keyring==10.5.0
+keyrings.alt==2.3
+onetimepass==1.0.1

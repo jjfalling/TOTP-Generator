@@ -21,14 +21,21 @@
 
 import argparse
 import json
-import sys
+import logging
 import signal
-import keyring
-import onetimepass
+import sys
 from getpass import getuser
 
+# load logger before keyring to stop log notice on some platforms
+logging.basicConfig(level=logging.WARN)
+logging.getLogger()
+logger = logging.getLogger()
+
+import keyring
+import onetimepass
+
 PROGNAME = 'Keyring TOTP Generator'
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 # backwards compatibility for py2
 try:
@@ -139,7 +146,7 @@ def edit_key():
 
 def service_menu(totp_creds):
     """Interactive service selection."""
-    i = -1
+    i = 0
     options = list()
 
     if len(totp_creds) == 0:
@@ -152,8 +159,9 @@ def service_menu(totp_creds):
         print('{i}: {name}'.format(i=i, name=key))
 
     while True:
-        sel = input("\nSelect a service by number: ")
+        user_in = input("\nSelect a service by number: ")
         try:
+            sel = int(user_in) - 1
             # range is exclusive
             if int(sel) in range(0, i + 1):
                 break
@@ -175,6 +183,7 @@ def main():
                                                  '\nWhen using the below flags, only one can be used at a time.',
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-a', '--add', action='store_true', help='add a TOTP service')
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug logging')
     parser.add_argument('-e', '--edit', action='store_true', help='edit a TOTP service')
     parser.add_argument('-r', '--remove', action='store_true', help='remove a TOTP service')
     parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service')
@@ -193,6 +202,12 @@ def main():
 
     if args.edit:
         edit_key()
+
+    if args.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    logger.debug('keyring module config root: ' + keyring.util.platform_.config_root())
+    logger.debug('keyring that will be used: ' + keyring.get_keyring().name)
 
     # first try to get creds
     totp_creds = load_creds()
