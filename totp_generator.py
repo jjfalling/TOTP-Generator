@@ -34,11 +34,17 @@ logger = logging.getLogger()
 
 import keyring
 import onetimepass
+from setproctitle import setproctitle
 
 PROGNAME = 'Keyring TOTP Generator'
 VERSION = '1.1.0'
 
 YES_ANSWERS = ['y', 'yes']
+
+# set the process name before going any further. This allows keychain requests to show as this program instead
+# of simply 'python'
+
+setproctitle(PROGNAME)
 
 # backwards compatibility for py2
 try:
