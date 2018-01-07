@@ -21,20 +21,24 @@
 
 import argparse
 import codecs
+from getpass import getuser
 import json
+import keyring
 import logging
 import signal
 import sys
-from getpass import getuser
+import onetimepass
+
+# Make this optional since installing it may require elevated privileges
+try:
+    from setproctitle import setproctitle
+except ImportError:
+    pass
 
 # load logger before keyring to stop log notice on some platforms
 logging.basicConfig(level=logging.WARN)
 logging.getLogger()
 logger = logging.getLogger()
-
-import keyring
-import onetimepass
-from setproctitle import setproctitle
 
 PROGNAME = 'Keyring TOTP Generator'
 VERSION = '1.2.0'
@@ -43,7 +47,8 @@ YES_ANSWERS = ['y', 'yes']
 
 # set the process name before going any further. This allows keychain requests to show as this program instead
 # of simply 'python'. Also replace the spaces to work better with some systems.
-setproctitle(PROGNAME.replace(' ', '-'))
+if 'setproctitle' in sys.modules:
+    setproctitle(PROGNAME.replace(' ', '-'))
 
 # backwards compatibility for py2
 try:
@@ -80,7 +85,7 @@ def export_creds(file_name):
 def import_creds(file_name):
     if input("Warning: You are about to import all TOTP credentials from {f}. \nExisting entries that\
  have the same name as imported entries will be overwritten without warning.\nDo you want to continue? [y/n]: ".
-             format(f=file_name)).lower() not in YES_ANSWERS:
+                     format(f=file_name)).lower() not in YES_ANSWERS:
         print("Not performing import.\n")
         sys.exit(1)
 
@@ -261,6 +266,9 @@ def main():
 
     if args.export_file:
         export_creds(args.export_file)
+
+    if 'setproctitle' not in sys.modules:
+        logger.info('setproctitle Module is not loaded. Unable to set process title.')
 
     logger.debug('keyring module config root: ' + keyring.util.platform_.config_root())
     logger.debug('keyring that will be used: ' + keyring.get_keyring().name)
