@@ -42,9 +42,8 @@ VERSION = '1.2.0'
 YES_ANSWERS = ['y', 'yes']
 
 # set the process name before going any further. This allows keychain requests to show as this program instead
-# of simply 'python'
-
-setproctitle(PROGNAME)
+# of simply 'python'. Also replace the spaces to work better with some systems.
+setproctitle(PROGNAME.replace(' ', '-'))
 
 # backwards compatibility for py2
 try:
