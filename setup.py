@@ -1,6 +1,7 @@
 import codecs
 import os
 import sys
+from shutil import rmtree
 
 from setuptools import setup, Command
 
@@ -84,7 +85,7 @@ setup(
     license='GPLv3',
     install_requires=REQUIRED,
     include_package_data=True,
-    py_modules=['keyring_totp_generator'],
+    packages=['keyring_totp_generator'],
     entry_points={
         "console_scripts": [
             "totp_generator = keyring_totp_generator.cli:main"
