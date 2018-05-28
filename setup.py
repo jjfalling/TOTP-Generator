@@ -24,6 +24,8 @@ TESTS_REQUIRED = ["pytest", "pytest-cov", "mock; python_version < '3.4'", "keyri
 
 here = os.path.abspath(os.path.dirname(__file__))
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 def read(*parts):
     with codecs.open(os.path.join(here, *parts), 'r') as fp:
@@ -70,7 +72,7 @@ class UploadCommand(Command):
         os.system('twine upload dist/*')
 
         self.status('Pushing git tags...')
-        os.system('git tag v{0}'.format(keyring_totp_generator.__version__))
+        os.system('git tag {0}'.format(keyring_totp_generator.__version__))
         os.system('git push --tags')
 
         sys.exit()
@@ -81,6 +83,8 @@ setup(
     version=keyring_totp_generator.__version__,
     author=AUTHOR,
     description=DESCRIPTION,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url=URL,
     license='GPLv3',
     install_requires=REQUIRED,
@@ -98,7 +102,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
-        'Development Status:: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: End Users/Desktop',
     ],
     tests_require=TESTS_REQUIRED,
