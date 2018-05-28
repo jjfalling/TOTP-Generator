@@ -8,8 +8,8 @@ import tempfile
 import onetimepass
 from keyrings.alt.file import PlaintextKeyring
 
-import keyring_totp_generator
-from keyring_totp_generator.core_utils import KeyringTotpGenerator
+import totp_generator
+from totp_generator.core_utils import KeyringTotpGenerator
 
 # backwards compatibility for py2
 try:
@@ -38,12 +38,12 @@ def cleanup_file(file):
             raise
 
 
-class TestKeyringTOTPGenerator:
-    """Test keyring_totp_generator"""
+class TestTOTPGenerator:
+    """Test totp_generator"""
 
     def setup_method(self):
-        self.PROGNAME = keyring_totp_generator.__progname__
-        self.VERSION = keyring_totp_generator.__version__
+        self.PROGNAME = totp_generator.__progname__
+        self.VERSION = totp_generator.__version__
         # force keyring to use tmpfile
         PlaintextKeyring.file_path = self.tmp_keyring_file = tempfile.mktemp()
         self.keyring_generator = KeyringTotpGenerator(force_keyring=PlaintextKeyring())
@@ -168,47 +168,3 @@ class TestKeyringTOTPGenerator:
         self.test_data.pop('svc_1', None)
         assert self.keyring_generator.creds == self.test_data
 
-    #
-    # def test_add_svc_overwrite_yes(self):
-    #     """Test import of data and ensure stored data is the same as what we imported."""
-    #     # when using the file backend the data is stored under the user
-    #     utils.import_creds(TEST_FILE)
-    #     self.test_data['svc_1'] = {'code': 'asdf'}
-    #     with mock.patch('keyring_totp_generator.utils.input', lambda x: 'y'):
-    #         utils.add_key('svc_1', 'asdf')
-    #
-    #     stored_data = utils.keyring.get_password(utils.SERVICE_NAME, getpass.getuser())
-    #     assert json.loads(stored_data) == self.test_data
-    #
-    # def test_rm_svc(self):
-    #     """Test import of data and ensure stored data is the same as what we imported."""
-    #     # when using the file backend the data is stored under the user
-    #     utils.import_creds(TEST_FILE)
-    #     utils.rm_key('svc_1')
-    #     stored_data = utils.keyring.get_password(utils.SERVICE_NAME, getpass.getuser())
-    #     tmp_data = deepcopy(self.test_data)
-    #     tmp_data.pop('svc_1', None)
-    #     assert json.loads(stored_data) == tmp_data
-    #
-    # def test_edit_svc(self):
-    #     """Test import of data and ensure stored data is the same as what we imported."""
-    #     # when using the file backend the data is stored under the user
-    #     utils.import_creds(TEST_FILE)
-    #     utils.edit_key('svc_1', 'svc_123', '3216549873216547', )
-    #     stored_data = utils.keyring.get_password(utils.SERVICE_NAME, getpass.getuser())
-    #     tmp_data = deepcopy(self.test_data)
-    #     tmp_data.pop('svc_1', None)
-    #     tmp_data['svc_123'] = {'code': '3216549873216547'}
-    #     assert json.loads(stored_data) == tmp_data
-    #
-    # def test_edit_svc_no_change(self):
-    #     """Test import of data and ensure stored data is the same as what we imported."""
-    #     # when using the file backend the data is stored under the user
-    #     utils.import_creds(TEST_FILE)
-    #     with pytest.raises(SystemExit) as wrapped_exit:
-    #         utils.edit_key('svc_1', '', '', )
-    #
-    #     stored_data = utils.keyring.get_password(utils.SERVICE_NAME, getpass.getuser())
-    #     tmp_data = deepcopy(self.test_data)
-    #     assert wrapped_exit.type == SystemExit
-    #     assert json.loads(stored_data) == tmp_data

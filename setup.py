@@ -5,11 +5,11 @@ from shutil import rmtree
 
 from setuptools import setup, Command
 
-import keyring_totp_generator
+import totp_generator
 
 AUTHOR = 'Jeremy Falling'
-DESCRIPTION = 'TOTP code generator that utilizes the system keyring.'
-URL = 'https://github.com/jjfalling/keyring-totp-generator'
+DESCRIPTION = 'Utility that generates TOTP codes and stores the TOTP secrets in your system keyring.'
+URL = 'https://github.com/jjfalling/totp-generator'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -72,15 +72,15 @@ class UploadCommand(Command):
         os.system('twine upload dist/*')
 
         self.status('Pushing git tags...')
-        os.system('git tag {0}'.format(keyring_totp_generator.__version__))
+        os.system('git tag {0}'.format(totp_generator.__version__))
         os.system('git push --tags')
 
         sys.exit()
 
 
 setup(
-    name="Keyring TOTP Generator",
-    version=keyring_totp_generator.__version__,
+    name="TOTP Generator",
+    version=totp_generator.__version__,
     author=AUTHOR,
     description=DESCRIPTION,
     long_description=long_description,
@@ -89,10 +89,10 @@ setup(
     license='GPLv3',
     install_requires=REQUIRED,
     include_package_data=True,
-    packages=['keyring_totp_generator'],
+    packages=['totp_generator'],
     entry_points={
         "console_scripts": [
-            "totp_generator = keyring_totp_generator.cli:main"
+            "totp_generator = totp_generator.cli:main"
         ]
     },
     classifiers=[

@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import tempfile
+
 import pytest
 
 if (sys.version_info > (3, 0)):
@@ -13,9 +14,9 @@ else:
 
 from keyrings.alt.file import PlaintextKeyring
 
-import keyring_totp_generator
-import keyring_totp_generator.cli as cli
-from keyring_totp_generator.core_utils import KeyringTotpGenerator
+import totp_generator
+import totp_generator.cli as cli
+from totp_generator.core_utils import KeyringTotpGenerator
 
 # backwards compatibility for py2
 try:
@@ -47,8 +48,8 @@ def cleanup_file(file):
 class TestTotpUtils:
 
     def setup_method(self):
-        self.PROGNAME = keyring_totp_generator.__progname__
-        self.VERSION = keyring_totp_generator.__version__
+        self.PROGNAME = totp_generator.__progname__
+        self.VERSION = totp_generator.__version__
         # force keyring to use tmpfile
         PlaintextKeyring.file_path = self.tmp_keyring_file = tempfile.mktemp()
         self.keyring_generator = KeyringTotpGenerator(force_keyring=PlaintextKeyring())
@@ -58,7 +59,7 @@ class TestTotpUtils:
         # cleanup tmp file
         cleanup_file(self.tmp_keyring_file)
         # reset input
-        keyring_totp_generator.cli.input = input
+        totp_generator.cli.input = input
 
     def test_show_version(self):
         correct_out = '{name} version {ver}\n'.format(name=self.PROGNAME, ver=self.VERSION)
@@ -74,6 +75,6 @@ class TestTotpUtils:
     def test_service_menu(self):
         """Test service menu."""
         self.keyring_generator.import_creds_from_file(TEST_FILE)
-        with mock.patch('keyring_totp_generator.cli.input', lambda x: '1'):
+        with mock.patch('totp_generator.cli.input', lambda x: '1'):
             ret = cli.service_menu(self.keyring_generator.get_services())
         assert ret == 'svc_1'

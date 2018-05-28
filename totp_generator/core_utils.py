@@ -26,15 +26,15 @@ from getpass import getuser
 import keyring
 import onetimepass
 
-import keyring_totp_generator
+import totp_generator
 
 # load logger before keyring to stop log notice on some platforms
 logging.basicConfig(level=logging.WARN)
 logging.getLogger()
 logger = logging.getLogger()
 
-PROGNAME = keyring_totp_generator.__progname__
-VERSION = keyring_totp_generator.__version__
+PROGNAME = totp_generator.__progname__
+VERSION = totp_generator.__version__
 SERVICE_NAME = 'totp_generator'
 
 

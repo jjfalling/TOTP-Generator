@@ -27,8 +27,8 @@ import sys
 import keyring
 import pyperclip
 
-import keyring_totp_generator
-from keyring_totp_generator.core_utils import KeyringTotpGenerator
+import totp_generator
+from totp_generator.core_utils import KeyringTotpGenerator
 
 # Make this optional since installing it may require elevated privileges
 try:
@@ -41,8 +41,8 @@ logging.basicConfig(level=logging.WARN)
 logging.getLogger()
 logger = logging.getLogger()
 
-PROGNAME = keyring_totp_generator.__progname__
-VERSION = keyring_totp_generator.__version__
+PROGNAME = totp_generator.__progname__
+VERSION = totp_generator.__version__
 SERVICE_NAME = 'totp_generator'
 
 YES_ANSWERS = ['y', 'yes']
@@ -105,8 +105,11 @@ def main():
     # catch ctrl+c
     signal.signal(signal.SIGINT, signal_handler)
 
-    parser = argparse.ArgumentParser(description='TOTP code generator' +
-                                                 '\n\nCodes are stored in a keyring supported by the keyring module.' +
+    parser = argparse.ArgumentParser(description=PROGNAME +
+                                                 '\n\nUtility that generates TOTP codes and stores the TOTP secrets in ' +
+                                                 ' your system keyring.'
+                                                 '\nTOTP Secrets are stored in a keyring supported by the keyring ' +
+                                                 'module.' +
                                                  '\nWith the exception of the debug flag, only one flag can be used ' +
                                                  'at a time.',
                                      formatter_class=argparse.RawTextHelpFormatter)
