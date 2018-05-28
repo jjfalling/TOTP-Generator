@@ -8,4 +8,4 @@ python:
 
 install: pip install -e .[test]
 
-script: pytest --cov=keyring_totp_generator --cov-report term-missing
+script: pytest --cov=totp_generator --cov-report term-missing
