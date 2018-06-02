@@ -1,7 +1,7 @@
-![Test Status](https://travis-ci.org/jjfalling/Keyring-TOTP-Generator.svg?branch=master)
+![Test Status](https://travis-ci.org/jjfalling/TOTP-Generator.svg?branch=master)
 ![Dependancy Status](https://pyup.io/repos/github/jjfalling/TOTP-Generator/shield.svg)
 
-# TOTP_Generator
+# TOTP Generator
 Simple Python TOTP code generator that stores TOTP secrets in your keyring.
 
 Supported keyrings can be found [here](https://pypi.python.org/pypi/keyring#what-is-python-keyring-lib). You can also specify the [keyring settings](https://pypi.python.org/pypi/keyring#customize-your-keyring-by-config-file
