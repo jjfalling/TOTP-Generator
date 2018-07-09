@@ -3,7 +3,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import setup, Command
+from setuptools import Command, setup
 
 import totp_generator
 
@@ -17,7 +17,6 @@ REQUIRED = [
     'keyrings.alt>=3.1,<4.0',
     'onetimepass>=1.0.1,<1.1.0',
     'pyperclip>=1.6.1<1.7.0',
-    'setproctitle>=1.1.10,<1.2.0'
 ]
 
 TESTS_REQUIRED = ["pytest", "pytest-cov", "mock; python_version < '3.4'", "keyrings.alt"]
@@ -26,6 +25,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
+
 
 def read(*parts):
     with codecs.open(os.path.join(here, *parts), 'r') as fp:
@@ -106,7 +106,10 @@ setup(
         'Intended Audience :: End Users/Desktop',
     ],
     tests_require=TESTS_REQUIRED,
-    extras_require={'test': TESTS_REQUIRED},
+    extras_require={
+        'test': TESTS_REQUIRED,
+        'proctitle': 'setproctitle>=1.1.10,<1.2.0'
+    },
     # setup.py publish support.
     cmdclass={
         'upload': UploadCommand,
