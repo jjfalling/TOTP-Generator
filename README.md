@@ -1,5 +1,5 @@
 ![Test Status](https://travis-ci.org/jjfalling/TOTP-Generator.svg?branch=master)
-![Dependancy Status](https://pyup.io/repos/github/jjfalling/TOTP-Generator/shield.svg)
+![Dependency Status](https://pyup.io/repos/github/jjfalling/TOTP-Generator/shield.svg)
 
 # TOTP Generator
 Simple Python TOTP code generator that stores TOTP secrets in your keyring.
