@@ -1,5 +1,6 @@
 import codecs
 import os
+import re
 import sys
 from shutil import rmtree
 
@@ -107,6 +108,7 @@ setup(
     ],
     tests_require=TESTS_REQUIRED,
     extras_require={
+        'dev': ['setuptools', 'twine', 'wheel'],
         'test': TESTS_REQUIRED,
         'proctitle': 'setproctitle>=1.1.10,<1.2.0'
     },
