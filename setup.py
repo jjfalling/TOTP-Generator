@@ -14,7 +14,7 @@ URL = 'https://github.com/jjfalling/totp-generator'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'keyring>=12.2.0,<13.0.0',
+    'keyring>=12.2.0,<18.0.0',
     'keyrings.alt>=3.1,<4.0',
     'onetimepass>=1.0.1,<1.1.0',
     'pyperclip>=1.6.1<1.7.0',
