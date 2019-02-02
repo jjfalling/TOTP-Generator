@@ -20,7 +20,7 @@ REQUIRED = [
     'pyperclip>=1.6.1<1.7.0',
 ]
 
-TESTS_REQUIRED = ["pytest", "pytest-cov", "mock; python_version < '3.4'", "keyrings.alt"]
+TESTS_REQUIRED = ["pytest", "pytest-cov<2.6", "mock; python_version < '3.4'", "keyrings.alt"]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
