@@ -121,8 +121,19 @@ def main():
                         help='export all credentials to a plain text json file')
     parser.add_argument('--import', dest='import_file', action='store', help='import JSON dump of credentials')
     parser.add_argument('-r', '--remove', action='store_true', help='remove a TOTP service')
-    parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service')
+    parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service instead of picking ' +
+                                                                        'from a list.')
     parser.add_argument('-v', '--version', action='store_true', help='show version and exit')
+    parser.add_argument('-q', '--quiet', action='store_true', help='when used with the copy flag no TOTP code is ' +
+                                                                   'shown but all other output is shown.\n' +
+                                                                   'when used with the service flag no output other ' +
+                                                                   'than the TOTP code is shown.\n' +
+                                                                   'when used with the copy and service flags no output'
+                                                                   ' is shown at all.\n' +
+                                                                   'overrides the debug flag and does not apply to' +
+                                                                   ' import, export, add, edit, remove, and help ' +
+                                                                   'flags.\n' +
+                                                                   'errors will always be shown.')
     args = parser.parse_args()
 
     keyring_generator = KeyringTotpGenerator()
@@ -216,12 +227,16 @@ def main():
 
     try:
         totp_code = keyring_generator.get_totp_code(service)
-        print(totp_code)
+        if args.quiet and args.copy:
+            pass
+        else:
+            print(totp_code)
+
+            if not args.service:
+                print('')
+
         if args.copy:
             pyperclip.copy(totp_code)
-
-        if not args.service:
-            print('')
 
     except TypeError as e:
         print("Error generating TOTP code: {e}\n".format(e=e))
