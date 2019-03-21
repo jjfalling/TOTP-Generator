@@ -106,12 +106,9 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
 
     parser = argparse.ArgumentParser(description=PROGNAME +
-                                                 '\n\nUtility that generates TOTP codes and stores the TOTP secrets in ' +
-                                                 ' your system keyring.'
-                                                 '\nTOTP Secrets are stored in a keyring supported by the keyring ' +
-                                                 'module.' +
-                                                 '\nWith the exception of the debug flag, only one flag can be used ' +
-                                                 'at a time.',
+                                     '\n\nUtility that generates TOTP codes and stores the TOTP secrets in your ' +
+                                     'system keyring.\n'
+                                     'TOTP Secrets are stored in a keyring supported by the keyring module.\n',
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-a', '--add', action='store_true', help='add a TOTP service')
     parser.add_argument('-c', '--copy', action='store_true', help='copy TOTP code to clipboard after generating')
@@ -124,7 +121,8 @@ def main():
     parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service instead of picking ' +
                                                                         'from a list.')
     parser.add_argument('-v', '--version', action='store_true', help='show version and exit')
-    parser.add_argument('-q', '--quiet', action='store_true', help='when used with the copy flag no TOTP code is ' +
+    parser.add_argument('-q', '--quiet', action='store_true', help='does nothing unless combined with another flag: ' +
+                                                                   'when used with the copy flag no TOTP code is ' +
                                                                    'shown but all other output is shown.\n' +
                                                                    'when used with the service flag no output other ' +
                                                                    'than the TOTP code is shown.\n' +
