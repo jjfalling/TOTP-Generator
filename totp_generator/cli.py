@@ -106,12 +106,9 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
 
     parser = argparse.ArgumentParser(description=PROGNAME +
-                                                 '\n\nUtility that generates TOTP codes and stores the TOTP secrets in ' +
-                                                 ' your system keyring.'
-                                                 '\nTOTP Secrets are stored in a keyring supported by the keyring ' +
-                                                 'module.' +
-                                                 '\nWith the exception of the debug flag, only one flag can be used ' +
-                                                 'at a time.',
+                                     '\n\nUtility that generates TOTP codes and stores the TOTP secrets in your ' +
+                                     'system keyring.\n'
+                                     'TOTP Secrets are stored in a keyring supported by the keyring module.\n',
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-a', '--add', action='store_true', help='add a TOTP service')
     parser.add_argument('-c', '--copy', action='store_true', help='copy TOTP code to clipboard after generating')
@@ -121,8 +118,19 @@ def main():
                         help='export all credentials to a plain text json file')
     parser.add_argument('--import', dest='import_file', action='store', help='import JSON dump of credentials')
     parser.add_argument('-r', '--remove', action='store_true', help='remove a TOTP service')
-    parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service')
+    parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service instead of picking ' +
+                                                                        'from a list.')
     parser.add_argument('-v', '--version', action='store_true', help='show version and exit')
+    parser.add_argument('-q', '--quiet', action='store_true', help='does nothing unless combined with another flag:\n' +
+                                                                   'when used with the copy flag no TOTP code is ' +
+                                                                   'not shown but all other output is shown.\n' +
+                                                                   'when used with the service flag no output other ' +
+                                                                   'than the TOTP code is shown.\n' +
+                                                                   'when used with the copy and service flags no output'
+                                                                   ' is shown at all.\n' +
+                                                                   'does not apply to import, export, add, edit, '+
+                                                                   'remove, debug, and help flags.\n' +
+                                                                   'errors will always be shown.')
     args = parser.parse_args()
 
     keyring_generator = KeyringTotpGenerator()
@@ -216,12 +224,16 @@ def main():
 
     try:
         totp_code = keyring_generator.get_totp_code(service)
-        print(totp_code)
+        if args.quiet and args.copy:
+            pass
+        else:
+            print(totp_code)
+
+            if not args.service:
+                print('')
+
         if args.copy:
             pyperclip.copy(totp_code)
-
-        if not args.service:
-            print('')
 
     except TypeError as e:
         print("Error generating TOTP code: {e}\n".format(e=e))
