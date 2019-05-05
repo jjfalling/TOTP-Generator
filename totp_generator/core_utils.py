@@ -121,7 +121,7 @@ class KeyringTotpGenerator:
         try:
             loaded_config = json.loads(file.read())
         except ValueError as err:
-            logger.fatal("Error: could not parse dump file. Ensure it is valid json.")
+            logger.fatal("Error: could not parse dump file. Ensure it is valid json: {err}.".format(err=err))
             return False
 
         self.creds.update(loaded_config)
