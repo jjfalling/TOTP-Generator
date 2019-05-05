@@ -199,8 +199,9 @@ def main():
             print("Not performing import.\n")
             sys.exit(1)
 
-        keyring_generator.import_creds_from_file(args.import_file)
-        print("Successfully imported credentials.\n")
+        import_res = keyring_generator.import_creds_from_file(args.import_file)
+        if import_res:
+            print("Successfully imported credentials.\n")
         sys.exit(0)
 
     if args.export_file:
