@@ -83,6 +83,6 @@ class TestTotpUtils:
         """Test service menu."""
         self.keyring_generator.import_creds_from_file(TEST_FILE)
         ret = cli.service_menu(self.keyring_generator.get_services(), list_services=True)
-        output = capsys.readouterr()
-        assert ret == None
-        assert output.out == "svc_1\nsvc_2\nsvc_3\n"
+        output = capsys.readouterr()[0]
+        assert ret is None
+        assert output == "svc_1\nsvc_2\nsvc_3\n"
