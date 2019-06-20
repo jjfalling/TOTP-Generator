@@ -74,7 +74,7 @@ def service_menu(services, list_services=False):
     """
     Interactive service selection.
 
-    :param services: TOTOP services data
+    :param services: TOTP services data
     :param list_services: only list services without number and return None. Defaults to False
     :return: totp service name or None
     """
