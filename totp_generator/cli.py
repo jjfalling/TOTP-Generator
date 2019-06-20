@@ -70,8 +70,14 @@ def version_string():
     return '{name} version {ver}\n'.format(name=PROGNAME, ver=VERSION)
 
 
-def service_menu(services):
-    """Interactive service selection."""
+def service_menu(services, list_services=False):
+    """
+    Interactive service selection.
+
+    :param services: TOTP services data
+    :param list_services: only list services without number and return None. Defaults to False
+    :return: totp service name or None
+    """
     i = 0
     options = list()
 
@@ -83,7 +89,15 @@ def service_menu(services):
     for service in services:
         i += 1
         options.append(service)
-        print('{i}: {name}'.format(i=i, name=service))
+
+        if list_services:
+            # don't print service number when prompt is disabled
+            print(service)
+        else:
+            print('{i}: {name}'.format(i=i, name=service))
+
+    if list_services:
+        return
 
     while True:
         user_in = input("\nSelect a service by number: ")
@@ -106,9 +120,9 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
 
     parser = argparse.ArgumentParser(description=PROGNAME +
-                                     '\n\nUtility that generates TOTP codes and stores the TOTP secrets in your ' +
-                                     'system keyring.\n'
-                                     'TOTP Secrets are stored in a keyring supported by the keyring module.\n',
+                                                 '\n\nUtility that generates TOTP codes and stores the TOTP secrets ' +
+                                                 'in your system keyring.\nTOTP' +
+                                                 'Secrets are stored in a keyring supported by the keyring module.\n',
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-a', '--add', action='store_true', help='add a TOTP service')
     parser.add_argument('-c', '--copy', action='store_true', help='copy TOTP code to clipboard after generating')
@@ -117,6 +131,7 @@ def main():
     parser.add_argument('--export', dest='export_file', action='store',
                         help='export all credentials to a plain text json file')
     parser.add_argument('--import', dest='import_file', action='store', help='import JSON dump of credentials')
+    parser.add_argument('-l', '--list', action='store_true', help='list TOTP services')
     parser.add_argument('-r', '--remove', action='store_true', help='remove a TOTP service')
     parser.add_argument('-s', '--service', type=str, default=None, help='specify a TOTP service instead of picking ' +
                                                                         'from a list.')
@@ -126,9 +141,9 @@ def main():
                                                                    'not shown but all other output is shown.\n' +
                                                                    'when used with the service flag no output other ' +
                                                                    'than the TOTP code is shown.\n' +
-                                                                   'when used with the copy and service flags no output'
-                                                                   ' is shown at all.\n' +
-                                                                   'does not apply to import, export, add, edit, '+
+                                                                   'when used with the copy and service flags no ' +
+                                                                   'output is shown at all.\n' +
+                                                                   'does not apply to import, export, add, edit, ' +
                                                                    'remove, debug, and help flags.\n' +
                                                                    'errors will always be shown.')
     args = parser.parse_args()
@@ -213,6 +228,11 @@ def main():
         keyring_generator.export_creds_to_file(args.export_file)
         print("Successfully exported credentials to {n}\n".format(n=args.export_file))
         sys.exit(0)
+
+    if args.list:
+        service_menu(keyring_generator.get_services(), list_services=True)
+        sys.exit(0)
+
 
     if not args.service:
         service = service_menu(keyring_generator.get_services())
