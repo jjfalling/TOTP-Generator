@@ -47,20 +47,6 @@ class KeyringTotpGenerator:
             keyring.set_keyring(force_keyring)
         self.creds = self.load_creds()
 
-    def load_creds(self, init_new=True):
-        """Load TOTP credentials from keyring."""
-        keyring_data = keyring.get_password(SERVICE_NAME, self.user)
-        if not keyring_data:
-            if init_new:
-                # keyring does not exist, init a new one.
-                return dict()
-            else:
-                return False
-
-        # data found, parse json
-        json_data = json.loads(keyring_data)
-        return json_data
-
     def add_service(self, name, code):
         if name in self.creds:
             logger.error(
@@ -133,6 +119,20 @@ class KeyringTotpGenerator:
         self.creds.update(loaded_config)
         self.save_creds()
         return True
+
+    def load_creds(self, init_new=True):
+        """Load TOTP credentials from keyring."""
+        keyring_data = keyring.get_password(SERVICE_NAME, self.user)
+        if not keyring_data:
+            if init_new:
+                # keyring does not exist, init a new one.
+                return dict()
+            else:
+                return False
+
+        # data found, parse json
+        json_data = json.loads(keyring_data)
+        return json_data
 
     def rm_service(self, service):
         self.creds.pop(service, None)

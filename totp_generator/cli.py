@@ -52,12 +52,6 @@ YES_ANSWERS = ['y', 'yes']
 if 'setproctitle' in sys.modules:
     setproctitle(PROGNAME.replace(' ', '-'))
 
-# backwards compatibility for py2
-try:
-    input = raw_input
-except NameError:
-    pass
-
 
 def signal_handler(signal, frame):  # pragma: no cover
     """Catch interrupts and exit without a stack trace."""
