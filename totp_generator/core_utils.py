@@ -109,7 +109,13 @@ class KeyringTotpGenerator:
 
     def get_totp_code(self, service):
         # force six digits
-        code = "%06d" % (onetimepass.get_totp(self.creds[service]['code']))
+        secret = self.creds[service]['code']
+        # this attempts to correct the padding when it is missing
+        # see https://github.com/tadeck/onetimepass/pull/22
+        mod = len(secret) % 8
+        if mod:
+            secret += '=' * (8 - mod)
+        code = "%06d" % (onetimepass.get_totp(secret))
         return code
 
     def import_creds_from_file(self, file_name):
