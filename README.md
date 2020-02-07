@@ -1,4 +1,5 @@
 [![Test Status](https://travis-ci.org/jjfalling/TOTP-Generator.svg?branch=master)](https://travis-ci.org/jjfalling/TOTP-Generator)
+[![codecov](https://codecov.io/gh/jjfalling/TOTP-Generator/branch/master/graph/badge.svg)](https://codecov.io/gh/jjfalling/TOTP-Generator)
 [![Dependency Status](https://pyup.io/repos/github/jjfalling/TOTP-Generator/shield.svg)](https://pyup.io/repos/github/jjfalling/TOTP-Generator/)
 
 # TOTP Generator

@@ -3,12 +3,13 @@ language: python
 # ===== Linux ======
 dist: xenial
 python:
-  - 3.5
   - 3.6
   - 3.7
   - 3.8
-  - 3.9
+  - 3.9-dev
 matrix:
+  allow_failures:
+     - python: 2.9-dev
   include:
     # ======= OSX ========
     - name: "Python 3.6.5 on macOS 10.13"
