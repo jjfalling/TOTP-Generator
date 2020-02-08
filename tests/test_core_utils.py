@@ -11,12 +11,6 @@ from keyrings.alt.file import PlaintextKeyring
 import totp_generator
 from totp_generator.core_utils import KeyringTotpGenerator
 
-# backwards compatibility for py2
-try:
-    input = raw_input
-except NameError:
-    pass
-
 TEST_FILE = os.path.join('tests', 'test_data.json')
 TEST_FILE = os.path.abspath(TEST_FILE)
 INVALID_TEST_FILE = os.path.join('tests', 'invalid_data.json')

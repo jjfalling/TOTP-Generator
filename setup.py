@@ -20,11 +20,11 @@ REQUIRED = [
     'pyperclip>=1.7.0,<1.8.0',
 ]
 
-TESTS_REQUIRED = ["pytest", "pytest-cov>2.6", "mock", "wheel", "codecov"]
+TESTS_REQUIRED = ['pytest', 'pytest-cov>2.6', 'mock', 'wheel', 'codecov', 'pylint']
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 
@@ -39,7 +39,7 @@ def find_version(*file_paths):
                               version_file, re.M)
     if version_match:
         return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
+    raise RuntimeError('Unable to find version string.')
 
 
 class UploadCommand(Command):
@@ -80,12 +80,12 @@ class UploadCommand(Command):
 
 
 setup(
-    name="TOTP Generator",
+    name='TOTP Generator',
     version=totp_generator.__version__,
     author=AUTHOR,
     description=DESCRIPTION,
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     url=URL,
     license='GPLv3',
     install_requires=REQUIRED,
@@ -93,8 +93,8 @@ setup(
     packages=['totp_generator'],
     python_requires='>=3.6.0',
     entry_points={
-        "console_scripts": [
-            "totp_generator = totp_generator.cli:main"
+        'console_scripts': [
+            'totp_generator = totp_generator.cli:main'
         ]
     },
     classifiers=[

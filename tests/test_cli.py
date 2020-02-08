@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Test cli module.
+"""
 import errno
 import json
 import os
@@ -7,22 +10,14 @@ import tempfile
 
 import pytest
 
-if (sys.version_info > (3, 0)):
-    from unittest import mock
-else:
-    import mock
+
+import mock
 
 from keyrings.alt.file import PlaintextKeyring
 
 import totp_generator
 import totp_generator.cli as cli
 from totp_generator.core_utils import KeyringTotpGenerator
-
-# backwards compatibility for py2
-try:
-    input = raw_input
-except NameError:
-    pass
 
 TEST_FILE = os.path.join('tests', 'test_data.json')
 TEST_FILE = os.path.abspath(TEST_FILE)
@@ -40,8 +35,8 @@ def cleanup_file(file):
     try:
         os.unlink(file)
     except OSError:
-        e = sys.exc_info()[1]
-        if e.errno != errno.ENOENT:  # No such file or directory
+        err = sys.exc_info()[1]
+        if err.errno != errno.ENOENT:  # No such file or directory
             raise
 
 
