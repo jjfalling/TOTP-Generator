@@ -6,63 +6,88 @@ python:
   - 3.6
   - 3.7
   - 3.8
-  - 3.9-dev
+  - 3.9
 matrix:
   allow_failures:
      - python: 2.9-dev
   include:
     # ======= OSX ========
-    - name: "Python 3.6.5 on macOS 10.13"
+    - name: "Python: 3.5"
       os: osx
-      osx_image: xcode9.4  # Python 3.6.5 running on macOS 10.13
-      language: shell       # 'language: python' is an error on Travis CI macOS
-      before_install:
-        - python3 --version
-        - pip3 install -U pip
-        - pip3 install -U pytest
-        - pip3 install codecov
-      after_success: python 3 -m codecov
-    - name: "Python 3.7.3 on macOS 10.14"
+      language: shell
+      python: 3.5
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.6"
       os: osx
-      osx_image: xcode10.2  # Python 3.7.3 running on macOS 10.14.3
-      language: shell       # 'language: python' is an error on Travis CI macOS
-      before_install:
-        - python3 --version
-        - pip3 install -U pip
-        - pip3 install -U pytest
-        - pip3 install codecov
-      after_success: python 3 -m codecov
+      language: shell
+      python: 3.6
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.7"
+      os: osx
+      language: shell
+      python: 3.7
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.8"
+      os: osx
+      language: shell
+      python: 3.8
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.9"
+      os: osx
+      language: shell
+      python: 3.9
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
     #  ====== WINDOWS =========
-    - name: "Python 3.6.8 on Windows"
+    - name: "Python 3.6.14 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
-        - choco install python --version 3.6.8
+        - choco install python --version 3.6.14
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
         - pip3 install codecov
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
-    - name: "Python 3.7.6 on Windows"
+    - name: "Python 3.7.11 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
-        - choco install python --version 3.7.6
+        - choco install python --version 3.7.11
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
         - pip3 install codecov
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-    - name: "Python 3.8.1 on Windows"
+    - name: "Python 3.8.11 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
-        - choco install python --version 3.8.1
+        - choco install python --version 3.8.11
         - python --version
         - python -m pip install --upgrade pip
         - pip3 install --upgrade pytest
         - pip3 install codecov
       env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+    - name: "Python 3.9.6 on Windows"
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.9.6
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+        - pip3 install codecov
+      env: PATH=/c/Python39:/c/Python39/Scripts:$PATH
 before_install:
   - python --version
   - pip install -U pip
