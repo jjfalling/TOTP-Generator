@@ -98,4 +98,3 @@ install:
 script: pytest --cov=totp_generator --cov-report term-missing && pylint --errors-only totp_generator
 after_success:
   - codecov # submit coverage
-

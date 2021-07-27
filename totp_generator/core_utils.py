@@ -143,6 +143,7 @@ class KeyringTotpGenerator:
         :return: String with six digits
         :rtype: str
         """
+        # force six digits
         secret = self.creds[service]['code']
         # force six digits
         totp = pyotp.TOTP(secret)
