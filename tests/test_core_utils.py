@@ -5,7 +5,7 @@ import os
 import sys
 import tempfile
 
-import onetimepass
+import pyotp
 from keyrings.alt.file import PlaintextKeyring
 
 import totp_generator
@@ -152,7 +152,8 @@ class TestTOTPGenerator:
         self.keyring_generator.import_creds_from_file(TEST_FILE)
         val = self.keyring_generator.get_totp_code('svc_1')
         # force to six digits
-        correct_val = "%06d" % (onetimepass.get_totp(self.test_data['svc_1']['code']))
+        totp = pyotp.TOTP(self.test_data['svc_1']['code'])
+        correct_val = "%06d" % (int(totp.now()))
         assert val == correct_val
 
     def test_re_service(self):
