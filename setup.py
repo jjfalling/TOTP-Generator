@@ -12,13 +12,8 @@ AUTHOR = 'Jeremy Falling'
 DESCRIPTION = 'Utility that generates TOTP codes and stores the TOTP secrets in your system keyring.'
 URL = 'https://github.com/jjfalling/totp-generator'
 
-# What packages are required for this module to be executed?
-REQUIRED = [
-    'keyring>=21.1.0,<22.0.0',
-    'keyrings.alt>=3.4,<4.0',
-    'onetimepass>=1.0.1,<1.1.0',
-    'pyperclip>=1.7.0,<1.8.0',
-]
+# What packages are required for this module to be executed? get this from the reqs file
+REQUIRED = [line.rstrip() for line in open(os.path.join(os.path.dirname(__file__), "requirements.txt"))]
 
 TESTS_REQUIRED = ['pytest', 'pytest-cov>2.6', 'mock', 'wheel', 'codecov', 'pylint']
 
@@ -110,7 +105,7 @@ setup(
     extras_require={
         'dev': ['setuptools', 'twine', 'wheel'],
         'test': TESTS_REQUIRED,
-        'proctitle': 'setproctitle>=1.1.10,<1.2.0'
+        'proctitle': [line.rstrip() for line in open(os.path.join(os.path.dirname(__file__), "requirements-optional.txt"))]
     },
     # setup.py publish support.
     cmdclass={
