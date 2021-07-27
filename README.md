@@ -6,8 +6,8 @@
 Simple Python TOTP code generator that stores TOTP secrets in your keyring.
 Install with `pip install totp-generator`
 
-As of version 3 this requires python 3.6+. Version 2 is tested to run on python 2.7 - 3.8, however this major version
-may not receive any updates.
+As of version 3 this requires python 3.7+. Version 2.x is tested to run on python 2.7 - 3.8, however this major version
+will not receive any updates.
 
 Supported keyrings can be found [here](https://pypi.python.org/pypi/keyring#what-is-python-keyring-lib). You can also
 specify the [keyring settings](https://pypi.python.org/pypi/keyring#customize-your-keyring-by-config-file) in a config
@@ -25,9 +25,6 @@ This project uses semantic versioning (major.minor.patch).
 
 Install the test requirements with `pip install ".[test]"
 `. Run the tests with pytest (see travis.yml for command).
-
-When changing the requirements, you must change them in both setup.py and requirements.txt. The reason the
-requirements file exists is due to how Pyup works.
 
 To create a new build:
  * Bump the version in totp_generator/\_\_init__.py

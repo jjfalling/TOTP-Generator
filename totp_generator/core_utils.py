@@ -26,7 +26,7 @@ from typing import Union
 
 import keyring
 import keyring.backend
-import onetimepass
+import pyotp
 
 import totp_generator
 
@@ -143,14 +143,10 @@ class KeyringTotpGenerator:
         :return: String with six digits
         :rtype: str
         """
-        # force six digits
         secret = self.creds[service]['code']
-        # this attempts to correct the padding when it is missing
-        # see https://github.com/tadeck/onetimepass/pull/22
-        mod = len(secret) % 8
-        if mod:
-            secret += '=' * (8 - mod)
-        code = "%06d" % (onetimepass.get_totp(secret))
+        # force six digits
+        totp = pyotp.TOTP(secret)
+        code = "%06d" % (int(totp.now()))
         return code
 
     def import_creds_from_file(self, file_name: str) -> bool:
