@@ -90,9 +90,9 @@ matrix:
       env: PATH=/c/Python39:/c/Python39/Scripts:$PATH
 before_install:
   - python --version
-  - pip install -U pip
-  - pip install -U pytest
-  - pip install codecov
+  - pip3 install -U pip
+  - pip3 install -U pytest
+  - pip3 install codecov
 install:
   - pip install ".[test]"
 script: pytest --cov=totp_generator --cov-report term-missing && pylint --errors-only totp_generator
