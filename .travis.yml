@@ -1,17 +1,101 @@
+# based on https://gist.github.com/shaypal5/7fd766933fb265af6f71a88cb91dd08c
 language: python
-
-# xenial and sudo needed for 3.7: https://github.com/travis-ci/travis-ci/issues/9815
+# ===== Linux ======
+dist: xenial
+python:
+  - 3.6
+  - 3.7
+  - 3.8
+  - 3.9
 matrix:
+  allow_failures:
+     - python: 2.9-dev
   include:
-    - python: 2.7
-    - python: 3.4
-    - python: 3.5
-    - python: 3.6
-    - python: 3.7
-    - python: 3.8
-      dist: xenial
-      sudo: true
+    # ======= OSX ========
+    - name: "Python: 3.5"
+      os: osx
+      language: shell
+      python: 3.5
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.6"
+      os: osx
+      language: shell
+      python: 3.6
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.7"
+      os: osx
+      language: shell
+      python: 3.7
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.8"
+      os: osx
+      language: shell
+      python: 3.8
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    - name: "Python: 3.9"
+      os: osx
+      language: shell
+      python: 3.9
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip
+    #  ====== WINDOWS =========
+    - name: "Python 3.6.8 on Windows"
+      os: windows
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.6.8
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+        - pip3 install codecov
+      env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
+    - name: "Python 3.7.9 on Windows"
+      os: windows
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.7.9
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+        - pip3 install codecov
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+    - name: "Python 3.8.10 on Windows"
+      os: windows
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.8.10
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+        - pip3 install codecov
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+    - name: "Python 3.9.6 on Windows"
+      os: windows
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.9.6
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+        - pip3 install codecov
+      env: PATH=/c/Python39:/c/Python39/Scripts:$PATH
+before_install:
+  - python --version
+  - pip3 install -U pip
+  - pip3 install -U pytest
+  - pip3 install codecov
+install:
+  - pip install ".[test]"
+script: pytest --cov=totp_generator --cov-report term-missing && pylint --errors-only totp_generator
+after_success:
+  - codecov # submit coverage
 
-install: pip install -e .[test]
-
-script: pytest --cov=totp_generator --cov-report term-missing

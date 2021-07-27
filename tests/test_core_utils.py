@@ -11,12 +11,6 @@ from keyrings.alt.file import PlaintextKeyring
 import totp_generator
 from totp_generator.core_utils import KeyringTotpGenerator
 
-# backwards compatibility for py2
-try:
-    input = raw_input
-except NameError:
-    pass
-
 TEST_FILE = os.path.join('tests', 'test_data.json')
 TEST_FILE = os.path.abspath(TEST_FILE)
 INVALID_TEST_FILE = os.path.join('tests', 'invalid_data.json')
@@ -132,7 +126,7 @@ class TestTOTPGenerator:
     def test_edit_service_code_change(self):
         """Test editing service with requesting a code change."""
         self.keyring_generator.import_creds_from_file(TEST_FILE)
-        ret = self.keyring_generator.edit_service('svc_1', code='MFRGGZDFMZTWQ2LP')
+        ret = self.keyring_generator.edit_service('svc_1', secret='MFRGGZDFMZTWQ2LP')
         self.test_data['svc_1']['code'] = 'MFRGGZDFMZTWQ2LP'
         assert ret is True
         assert self.keyring_generator.creds == self.test_data
@@ -140,7 +134,7 @@ class TestTOTPGenerator:
     def test_edit_service_name_code_change(self):
         """Test editing service with requesting a new name and new code."""
         self.keyring_generator.import_creds_from_file(TEST_FILE)
-        ret = self.keyring_generator.edit_service('svc_1', new_name='svc_5', code='MFRGGZDFMZTWQ2LP')
+        ret = self.keyring_generator.edit_service('svc_1', new_name='svc_5', secret='MFRGGZDFMZTWQ2LP')
         self.test_data['svc_5'] = self.test_data['svc_1']
         self.test_data['svc_5']['code'] = 'MFRGGZDFMZTWQ2LP'
         self.test_data.pop('svc_1', None)
