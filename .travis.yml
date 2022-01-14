@@ -1,15 +1,14 @@
 # based on https://gist.github.com/shaypal5/7fd766933fb265af6f71a88cb91dd08c
 language: python
 # ===== Linux ======
-dist: xenial
+dist: focal
 python:
   - 3.6
   - 3.7
   - 3.8
   - 3.9
+  - "3.10.1" # there is a travis issue with specifying just major.minor on 3.10
 matrix:
-  allow_failures:
-     - python: 2.9-dev
   include:
     # ======= OSX ========
     - name: "Python: 3.5"
@@ -47,7 +46,18 @@ matrix:
       cache:
         - directories:
           - $HOME/Library/Caches/pip
+    - name: "Python: 3.10"
+      os: osx
+      language: shell
+      python: "3.10"
+      cache:
+        - directories:
+          - $HOME/Library/Caches/pip-
     #  ====== WINDOWS =========
+    #
+    # NOTE: not all python versions are available on chocolatey on windows
+    #
+
     - name: "Python 3.6.8 on Windows"
       os: windows
       language: shell       # 'language: python' is an error on Travis CI Windows
@@ -88,6 +98,16 @@ matrix:
         - pip3 install --upgrade pytest
         - pip3 install codecov
       env: PATH=/c/Python39:/c/Python39/Scripts:$PATH
+    - name: "Python 3.10.1 on Windows"
+      os: windows
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.10.1
+        - python --version
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+        - pip3 install codecov
+      env: PATH=/c/Python310:/c/Python310/Scripts:$PATH
 before_install:
   - python --version
   - pip3 install -U pip

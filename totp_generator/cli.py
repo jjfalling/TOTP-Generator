@@ -99,6 +99,9 @@ def service_menu(services: dict, list_services: bool = False) -> Union[str, None
         print(
             'It appears you have not loaded any TOTP data. Please add a TOTP service. Run with --help for more.\n')
         sys.exit(1)
+    else:
+        # get max amount of padding needed
+        max_padding = len(str(len(services)))
 
     for service in services:
         i += 1
@@ -108,7 +111,9 @@ def service_menu(services: dict, list_services: bool = False) -> Union[str, None
             # don't print service number when prompt is disabled
             print(service)
         else:
-            print('{i}: {name}'.format(i=i, name=service))
+            # determine service number padding (to improve readability)
+            linepad = (max_padding - len(str(i))) * (' ')
+            print('{i}: {padding}{name}'.format(i=i, padding=linepad, name=service))
 
     if list_services:
         return None
