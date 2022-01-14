@@ -3,7 +3,6 @@ language: python
 # ===== Linux ======
 dist: focal
 python:
-  - 3.6
   - 3.7
   - 3.8
   - 3.9
@@ -11,20 +10,6 @@ python:
 matrix:
   include:
     # ======= OSX ========
-    - name: "Python: 3.5"
-      os: osx
-      language: shell
-      python: 3.5
-      cache:
-        - directories:
-          - $HOME/Library/Caches/pip
-    - name: "Python: 3.6"
-      os: osx
-      language: shell
-      python: 3.6
-      cache:
-        - directories:
-          - $HOME/Library/Caches/pip
     - name: "Python: 3.7"
       os: osx
       language: shell
@@ -58,16 +43,6 @@ matrix:
     # NOTE: not all python versions are available on chocolatey on windows
     #
 
-    - name: "Python 3.6.8 on Windows"
-      os: windows
-      language: shell       # 'language: python' is an error on Travis CI Windows
-      before_install:
-        - choco install python --version 3.6.8
-        - python --version
-        - python -m pip install --upgrade pip
-        - pip3 install --upgrade pytest
-        - pip3 install codecov
-      env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
     - name: "Python 3.7.9 on Windows"
       os: windows
       language: shell       # 'language: python' is an error on Travis CI Windows
