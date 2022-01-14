@@ -26,7 +26,7 @@ import sys
 from typing import Union
 
 import keyring
-import pyperclip
+import pyclip
 
 import totp_generator
 from totp_generator.core_utils import KeyringTotpGenerator
@@ -277,7 +277,7 @@ def main():
                 print('')
 
         if args.copy:
-            pyperclip.copy(totp_code)
+            pyclip.copy(totp_code)
 
     except TypeError as err:
         print("Error generating TOTP code: {e}\n".format(e=err))

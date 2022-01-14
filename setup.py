@@ -86,7 +86,7 @@ setup(
     install_requires=REQUIRED,
     include_package_data=True,
     packages=['totp_generator'],
-    python_requires='>=3.6.0',
+    python_requires='>=3.7.0',
     entry_points={
         'console_scripts': [
             'totp_generator = totp_generator.cli:main'
