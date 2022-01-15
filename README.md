@@ -24,7 +24,7 @@ Run `totp_generator` with the --help flag for more information.
 This project uses semantic versioning (major.minor.patch).
 
 Install the test requirements with `pip install ".[test]"
-`. Run the tests with pytest (see travis.yml for command).
+`. Run the tests with pytest (see https://github.com/jjfalling/TOTP-Generator/blob/master/.github/workflows/python-tests.yml for command).
 
 To create a new build:
  * Bump the version in totp_generator/\_\_init__.py
