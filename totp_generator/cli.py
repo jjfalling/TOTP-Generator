@@ -2,7 +2,7 @@
 # ****************************************************************************
 # *   Keyring TOTP Generator                                                 *
 # *                                                                          *
-# *   Copyright (C) 2017-2020 by Jeremy Falling except where noted.          *
+# *   Copyright (C) 2017-2022 by Jeremy Falling except where noted.          *
 # *                                                                          *
 # *   This program is free software: you can redistribute it and/or modify   *
 # *   it under the terms of the GNU General Public License as published by   *
