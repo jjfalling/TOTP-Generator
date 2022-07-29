@@ -1,6 +1,5 @@
 [![Python Tests](https://github.com/jjfalling/TOTP-Generator/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/jjfalling/TOTP-Generator/actions/workflows/python-tests.yml)
 [![codecov](https://codecov.io/gh/jjfalling/TOTP-Generator/branch/master/graph/badge.svg)](https://codecov.io/gh/jjfalling/TOTP-Generator)
-[![Dependency Status](https://pyup.io/repos/github/jjfalling/TOTP-Generator/shield.svg)](https://pyup.io/repos/github/jjfalling/TOTP-Generator/)
 
 # TOTP Generator
 Simple Python TOTP code generator that stores TOTP secrets in your keyring.

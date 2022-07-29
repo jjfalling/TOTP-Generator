@@ -80,7 +80,7 @@ def version_string() -> str:
     return '{name} version {ver}\n'.format(name=PROGNAME, ver=VERSION)
 
 
-def service_menu(services: dict, list_services: bool = False) -> Union[str, None]:
+def service_menu(services: dict, list_services: bool = False, prompt_msg: str = None) -> Union[str, None]:
     """
     Interactive service selection.
 
@@ -89,6 +89,9 @@ def service_menu(services: dict, list_services: bool = False) -> Union[str, None
     :param list_services: Only list services without number and return
                           None. Defaults to False
     :type list_services: bool
+    :param prompt_msg: Service prompt message to override default
+                       message
+    :type prompt_msg: str
     :return: totp service name or None
     :rtype: Union[string, None]
     """
@@ -119,7 +122,10 @@ def service_menu(services: dict, list_services: bool = False) -> Union[str, None
         return None
 
     while True:
-        user_in = input("\nSelect a service by number: ")
+        if prompt_msg:
+            user_in = input("\n" + prompt_msg + ": ")
+        else:
+            user_in = input("\nSelect a service by number: ")
         try:
             sel = int(user_in) - 1
             # range is exclusive
@@ -198,7 +204,7 @@ def main():
         sys.exit(0)
 
     if args.remove:
-        service = service_menu(keyring_generator.get_services())
+        service = service_menu(keyring_generator.get_services(), prompt_msg="Select a service by number to remove")
         res = keyring_generator.rm_service(service)
         if res:
             print('Removed service {s}\n'.format(s=service))
@@ -207,7 +213,7 @@ def main():
         sys.exit(0)
 
     if args.edit:
-        service = service_menu(keyring_generator.get_services())
+        service = service_menu(keyring_generator.get_services(), prompt_msg="Select a service by number to edit")
 
         while True:
             name = input("Enter the new name of this service or hit return to leave unchanged: ")
