@@ -188,8 +188,9 @@ def main():
     try:
         keyring_generator = KeyringTotpGenerator()
     except RuntimeError as err:
+        LOGGER.error('Keyring encountered a runtime error: %s', str(err))
         LOGGER.debug('Keyring traceback: ', exc_info=True)
-        LOGGER.fatal('Keyring encountered a runtime error: %s', str(err))
+        exit(1)
 
     LOGGER.debug('keyring module config root: %s', keyring.util.platform_.config_root())
     LOGGER.debug('keyring that will be used: %s', keyring.get_keyring().name)
