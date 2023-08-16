@@ -24,6 +24,7 @@ import logging
 import signal
 import sys
 from typing import Union
+import traceback
 
 import keyring
 import pyclip
@@ -175,8 +176,6 @@ def main():
                                                                    'always be shown.')
     args = parser.parse_args()
 
-    keyring_generator = KeyringTotpGenerator()
-
     # handle flags
     if args.debug:
         # set logger level to debug and also include more info in the log string
@@ -185,6 +184,12 @@ def main():
 
     if 'setproctitle' not in sys.modules:
         LOGGER.info('setproctitle Module is not loaded. Unable to set process title.')
+
+    try:
+        keyring_generator = KeyringTotpGenerator()
+    except RuntimeError as err:
+        LOGGER.debug('Keyring traceback: ', exc_info=True)
+        LOGGER.fatal('Keyring encountered a runtime error: %s', str(err))
 
     LOGGER.debug('keyring module config root: %s', keyring.util.platform_.config_root())
     LOGGER.debug('keyring that will be used: %s', keyring.get_keyring().name)
@@ -283,7 +288,12 @@ def main():
                 print('')
 
         if args.copy:
-            pyclip.copy(totp_code)
+            try:
+                pyclip.copy(totp_code)
+            except pyclip.base.ClipboardSetupException as err:
+                LOGGER.error('Could not setup clipboard. Under Linux, ensure you have xclip installed if running x11 or'
+                             ' wl-clipboard if running wayland. See the project readme for more information.')
+                LOGGER.debug('pyclip could not seup the clipboard. Full error:', exc_info=True)
 
     except TypeError as err:
         print("Error generating TOTP code: {e}\n".format(e=err))
