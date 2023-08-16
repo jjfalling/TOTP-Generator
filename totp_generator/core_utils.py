@@ -183,6 +183,7 @@ class KeyringTotpGenerator:
         :return: Dict with credential service  data otherwise False
         :rtype: Union[bool, dict]
         """
+        # this can throw execptions, but let the caller handle it
         keyring_data = keyring.get_password(SERVICE_NAME, self.user)
         if not keyring_data:
             if init_new:

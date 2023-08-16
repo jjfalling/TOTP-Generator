@@ -16,6 +16,8 @@ setproctitle is an optional dependency due permission and dependency requirement
 `pip install totp-generator[proctitle]` to install this dependancy and enable setting the process name. This feature
 is useful for some uses with some keyrings such as the OSX Keychain.
 
+The clipboard function under linux does require xclip with x11 or wl-clipboard with wayland. See https://github.com/spyoungtech/pyclip/tree/main/docs#platform-specific-notesissues
+
 Run `totp_generator` with the --help flag for more information.
 
 
