@@ -1,6 +1,0 @@
-[MASTER]
-extension-pkg-whitelist=binascii
-ignore-patterns=tests/*.py
-
-[FORMAT]
-max-line-length=120
